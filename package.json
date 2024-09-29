@@ -99,7 +99,8 @@
     "unstated-next": "^1.1.0",
     "utif": "^3.1.0",
     "webpack": "^5.37.1",
-    "yorkie": "^2.0.0"
+    "yorkie": "^2.0.0",
+    "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {
     "@types/accounting": "^0.4.1",

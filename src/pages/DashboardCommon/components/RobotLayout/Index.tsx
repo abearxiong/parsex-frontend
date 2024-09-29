@@ -7,6 +7,7 @@ import type { ConnectState } from '@/models/connect';
 import useUploadFormat from '../RobotLeftView/store/useUploadFormat';
 import useMathJaxLoad from '../../RobotMarkdown/MathJaxRender/useMathJaxLoad';
 import styles from './Index.less';
+import { ExposeStoreToWindow } from '../../RobotStruct/store/ExportToWindows';
 
 interface IProps {
   leftView: React.ReactNode;
@@ -77,6 +78,8 @@ const RobotLayout: React.FC<IProps> = ({
           {rightView}
         </Col>
       )}
+      <div className="ai-parsex-tools"></div>
+      <ExposeStoreToWindow />
     </Row>
   );
 };

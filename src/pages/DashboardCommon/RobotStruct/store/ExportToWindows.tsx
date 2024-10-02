@@ -7,6 +7,8 @@ type ParsexRenderStore = {
   setIsRender: (isRender: boolean) => void;
   containerStore: any;
   setContentStore: (store: any) => void;
+  currentFile?: any;
+  setCurrentFile?: (currentFile: any) => void;
 };
 export const renderStore = createStore<ParsexRenderStore>((set, get) => ({
   isRender: false,
@@ -14,6 +16,10 @@ export const renderStore = createStore<ParsexRenderStore>((set, get) => ({
   containerStore: {},
   setContentStore: (store) => {
     set({ containerStore: store });
+  },
+  currenFile: {},
+  setCurrentFile: (currentFile) => {
+    set({ currentFile });
   },
 }));
 window.renderStore = renderStore;
@@ -65,7 +71,9 @@ export const ExposeStoreToWindow = () => {
       renderStore.getState().setIsRender(false);
     };
   }, [store]);
-
+  useEffect(()=>{
+    renderStore.getState().setCurrentFile(store.currentFile)
+  },[store.currentFile])
   return null;
 };
 

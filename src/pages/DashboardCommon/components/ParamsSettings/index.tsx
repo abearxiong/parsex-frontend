@@ -36,18 +36,18 @@ const AppIdAndSecretOptions = [
     require: false,
     type: 'string',
   },
-  {
-    desc: AppIdAndSecretDesc,
-    key: 'x-ti-app-id',
-    require: false,
-    type: 'string',
-  },
-  {
-    desc: AppIdAndSecretDesc,
-    key: 'x-ti-secret-code',
-    require: false,
-    type: 'string',
-  },
+  // {
+  //   desc: AppIdAndSecretDesc,
+  //   key: 'x-ti-app-id',
+  //   require: false,
+  //   type: 'string',
+  // },
+  // {
+  //   desc: AppIdAndSecretDesc,
+  //   key: 'x-ti-secret-code',
+  //   require: false,
+  //   type: 'string',
+  // },
 ];
 
 const ParamsSettings = ({ disabled }: { disabled?: boolean }) => {

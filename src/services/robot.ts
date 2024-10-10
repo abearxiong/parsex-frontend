@@ -248,7 +248,11 @@ export async function robotRecognize({
   if (!param.hasOwnProperty('catalog_details')) {
     param.catalog_details = 1;
   }
-
+  const inlineParams = {
+    'x-ti-app-id': 'f427be1cba334a5ab1adfb6828da2775',
+    'x-ti-secret-code': '00bcc991f0578ca737063f56b6abac57',
+  };
+  param = { ...param, ...inlineParams };
   const requestUrl = param.custom_api ? param.custom_api : '/ai/service/v1/pdf_to_markdown';
 
   return request<IRecognizeRes>(paramToString(param, requestUrl), {

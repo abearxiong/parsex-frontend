@@ -3,21 +3,17 @@ import { useEffect } from 'react';
 import { storeContainer } from './index';
 import { createStore } from 'zustand/vanilla';
 type ParsexRenderStore = {
-  isRender: boolean;
-  setIsRender: (isRender: boolean) => void;
   containerStore: any;
   setContentStore: (store: any) => void;
-  currentFile?: any;
-  setCurrentFile?: (currentFile: any) => void;
+  currentFile: any;
+  setCurrentFile: (currentFile: any) => void;
 };
 export const renderStore = createStore<ParsexRenderStore>((set, get) => ({
-  isRender: false,
-  setIsRender: (isRender: boolean) => set({ isRender }),
   containerStore: {},
   setContentStore: (store) => {
     set({ containerStore: store });
   },
-  currenFile: {},
+  currentFile: {},
   setCurrentFile: (currentFile) => {
     set({ currentFile });
   },
@@ -34,6 +30,7 @@ export const ExposeStoreToWindow = () => {
         return store.currentFile;
       },
       setCurrentFile: store.setCurrentFile,
+      updateCurrentFileRects: store.updateCurrentFileRects,
       get resultJson() {
         return store.resultJson;
       },
@@ -63,17 +60,12 @@ export const ExposeStoreToWindow = () => {
         return store.multiple;
       },
     };
-    renderStore.getState().setIsRender(true);
-    renderStore.getState().setContentStore(store);
+    window.getStore = () => window.storeContainer;
     // 清理函数，组件卸载时移除绑定
     return () => {
       delete window.storeContainer;
-      renderStore.getState().setIsRender(false);
     };
   }, [store]);
-  useEffect(()=>{
-    renderStore.getState().setCurrentFile(store.currentFile)
-  },[store.currentFile])
   return null;
 };
 

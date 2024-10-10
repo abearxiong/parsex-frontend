@@ -26,6 +26,7 @@ const RobotTableLayout = ({ children, dispatch }: { children: ReactNode; dispatc
         style={{ minWidth: 1200, height: 'calc(100vh - 50px)', overflow: 'auto' }}
       >
         {children}
+        <div className="ai-parsex-tools"></div>
       </main>
     </div>
   );

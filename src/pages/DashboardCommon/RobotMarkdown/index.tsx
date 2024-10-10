@@ -18,6 +18,7 @@ import { MultiPageMarkdown } from './MarkdownRender';
 import { formatResult } from './utils';
 import type { Dispatch } from 'umi';
 import { AppIdAndSecretPosition } from '../components/ParamsSettings';
+import ExposeStoreToWindow from '../RobotStruct/store/ExportToWindows';
 
 interface PageProps {
   Robot: IRobotModelState;
@@ -196,6 +197,7 @@ const MarkdownPage: FC<PageProps> = (props) => {
           </RobotRightView>
         }
       />
+      <ExposeStoreToWindow />
     </div>
   );
 };

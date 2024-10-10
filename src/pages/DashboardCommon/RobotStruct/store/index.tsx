@@ -4,6 +4,7 @@ import type { IFileItem, IImgResult, IItemList, IRectListItem, KeyTypeEnum } fro
 import { useState } from 'react';
 import { getItemListCopyContent } from '../utils';
 import { useLocation } from 'dva';
+import { renderStore } from './ExportToWindows';
 
 interface ContentConfig {
   type?: ResultType;
@@ -13,8 +14,12 @@ interface ContentConfig {
 }
 
 const useStore = () => {
-  const [currentFile, setCurrentFile] = useState<IFileItem | Record<string, any>>({} as any);
+  const [currentFile, _setCurrentFile] = useState<IFileItem | Record<string, any>>({} as any);
   const [resultJson, setResultJson] = useState<IImgResult | null>(null);
+  const setCurrentFile = (currentFile: any) => {
+    _setCurrentFile(currentFile);
+    renderStore.getState().setCurrentFile(currentFile);
+  };
   // 识别结果
   const [itemList, setItemList] = useState<IItemList[]>([]);
   const [tableList, setTableList] = useState<IItemList[][]>();
@@ -38,9 +43,41 @@ const useStore = () => {
     });
     return content;
   };
+
+  const updateCurrentFileRects = (rects: IRectListItem[]) => {
+    const newCurrentFile = { ...currentFile };
+    let orginalRects = newCurrentFile.rects || [];
+    orginalRects = orginalRects.map((item) => {
+      const rectList = item;
+      if (Array.isArray(rectList)) {
+        return rectList.map((rect) => {
+          const rectItem = rects.find((r) => r.content_id == rect.content_id) || {};
+          if(!rect?.oText) {
+            rect.oText = rect?.text;
+          }
+          return {
+            ...rect,
+            ...rectItem,
+          };
+        });
+      } else {
+        const rectItem = rects.find((r) => r.content_id == rectList.content_id) || {};
+        if(!rectList?.oText) {
+          rectList.oText = rectList?.text;
+        }
+        return {
+          ...rectList,
+          ...rectItem,
+        };
+      }
+    });
+    newCurrentFile.rects = orginalRects;
+    setCurrentFile(newCurrentFile);
+  };
   return {
     currentFile,
     setCurrentFile,
+    updateCurrentFileRects,
     resultJson,
     setResultJson,
     itemList,

@@ -2,6 +2,7 @@ import { Spin } from 'antd';
 import { useLocation } from 'umi';
 import styles from './Loading.less';
 import logo from '@/assets/logo@2x.png';
+import logo2 from '@/assets/logo-03.png';
 
 /**
  * @FIXME: 对于页面嵌套时 子路由加载会首次渲染loading
@@ -15,7 +16,7 @@ const Loading = () => {
   return (
     <div className={styles.loadingContainer}>
       <div className={styles.logo}>
-        <img src={logo} alt="" />
+        <img src={logo2} alt="" />
       </div>
       <Spin spinning />
     </div>

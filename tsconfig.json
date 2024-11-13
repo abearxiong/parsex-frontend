@@ -32,6 +32,7 @@
     "src/.umi/*",
     "webpack",
     "jest",
-    "src/pages/DashboardStudio/**/*"
+    "src/pages/DashboardStudio/**/*",
+    "vite.config.ts",
   ]
 }

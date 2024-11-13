@@ -164,7 +164,7 @@ const MarkdownPage: FC<PageProps> = (props) => {
 
   return (
     <div className={styles.strutContainer}>
-      <RobotHeader
+      {/* <RobotHeader
         extra={
           <span className={styles.apiText}>
             <span>热点指南：</span>
@@ -176,7 +176,7 @@ const MarkdownPage: FC<PageProps> = (props) => {
             </a>
           </span>
         }
-      />
+      /> */}
       <RobotLayout
         leftView={
           <LeftView

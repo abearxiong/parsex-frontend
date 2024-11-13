@@ -4,12 +4,25 @@ import defaultSettings from './defaultSettings';
 import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 import { prefixPath } from '../src/utils/env';
 import path from 'path';
+
 const { NODE_ENV } = process.env;
 
 /**
  * base config file
  */
 export default defineConfig({
+  // plugins: [
+  //   WebpackPluginModuleFederation({
+  //     name: 'your-app-name', // 本地应用的名字
+  //     library: { type: 'var', name: 'yourApp' },
+  //     filename: 'remoteEntry.js',
+  //     exposes: {
+  //       './Component': './src/components/YourComponent', // 暴露的模块
+  //     },
+  //     shared: ['react', 'react-dom'], // 共享的依赖
+  //   }),
+  // ],
+  fastRefresh: true,
   history: {
     type: 'browser',
   },
@@ -17,7 +30,7 @@ export default defineConfig({
     env: NODE_ENV,
   },
   hash: true,
-  locale: false,
+  locale: undefined,
   base: prefixPath,
   publicPath: prefixPath,
   ignoreMomentLocale: true,
@@ -31,9 +44,6 @@ export default defineConfig({
     ...theme,
   },
   antd: {},
-  dva: {
-    hmr: true,
-  },
   targets: {
     // 浏览器兼容 Default: { chrome: 49, firefox: 64, safari: 10, edge: 13, ios: 10 }
     ie: 11,
@@ -103,44 +113,45 @@ export default defineConfig({
   // extraBabelPlugins:[['inline-react-svg',{}],["module-resolver", { root:["../"] ,"alias": { "@": "./src" } }]],
   extraBabelIncludes: [path.join(__dirname, './node_modules/exif-rotate-js/lib')],
   chunks: ['vendors', 'umi'],
-  chainWebpack(config) {
-    config.merge({
-      optimization: {
-        splitChunks: {
-          cacheGroups: {
-            commons: {
-              test: /(react|react-dom)/,
-              name: 'vendors',
-              chunks: 'all',
-            },
-          },
-        },
-      },
-    });
-    // config.resolve.alias.set('monaco-editor', 'monaco-editor/esm/vs/editor/editor.api.js')
-    config.plugin('monaco-editor').use(MonacoWebpackPlugin, [
-      {
-        languages: [
-          'javascript',
-          'python',
-          'html',
-          'java',
-          'lua',
-          'php',
-          'cpp',
-          'csharp',
-          'shell',
-          'go',
-        ],
-      },
-    ]);
-    config.module
-      .rule('xlsx')
-      .test(/\.(xlsx)$/)
-      .use('file-loader')
-      .loader('file-loader')
-      .end();
-  },
+  // chainWebpack(config) {
+  //   config.merge({
+  //     optimization: {
+  //       splitChunks: {
+  //         cacheGroups: {
+  //           commons: {
+  //             test: /(react|react-dom)/,
+  //             name: 'vendors',
+  //             chunks: 'all',
+  //           },
+  //         },
+  //       },
+  //     },
+  //   });
+  //   // config.resolve.alias.set('monaco-editor', 'monaco-editor/esm/vs/editor/editor.api.js')
+  //   config.plugin('monaco-editor').use(MonacoWebpackPlugin, [
+  //     {
+  //       languages: [
+  //         'javascript',
+  //         'python',
+  //         'html',
+  //         'java',
+  //         'lua',
+  //         'php',
+  //         'cpp',
+  //         'csharp',
+  //         'shell',
+  //         'go',
+  //       ],
+  //     },
+  //   ]);
+  //   config.module
+  //     .rule('xlsx')
+  //     .test(/\.(xlsx)$/)
+  //     .use('file-loader')
+  //     .loader('file-loader')
+  //     .end();
+  // },
+  webpack5: {},
   // esbuild is father build tools
   // https://umijs.org/plugins/plugin-esbuild
 });
